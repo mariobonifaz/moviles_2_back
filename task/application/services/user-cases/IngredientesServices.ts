@@ -29,4 +29,26 @@ export class IngredientesService {
             throw new Error(`Error deleting Ingredientes: ${(error as Error).message}`);
         }
     }
+
+    async updateIngredientes(ingredientesId: string, IngredientesData: Partial<Ingredientes>): Promise<Ingredientes> {
+        try {
+            // Primero, obtenemos el producto que queremos actualizar
+            const existingIngrediente = await this.ingredientesRepository.findById(ingredientesId);
+
+            // Si el producto no existe, lanzamos un error
+            if (!existingIngrediente) {
+                throw new Error('Product not found');
+            }
+
+            // Actualizamos los campos proporcionados en updatedProductData
+            Object.assign(existingIngrediente, IngredientesData);
+
+            // Actualizamos el producto en la base de datos
+            const updatedIngrediente = await this.ingredientesRepository.updateIngrediente(existingIngrediente);
+
+            return updatedIngrediente;
+        } catch (error) {
+            throw new Error(`Error updating product: ${(error as Error).message}`);
+        }
+    }
 }

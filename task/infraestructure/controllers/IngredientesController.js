@@ -60,5 +60,23 @@ class IngredienteController {
             }
         });
     }
+    updateIngrediente(req, res, ingredientesService) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const ingredienteId = req.params.id;
+                const updatedIngrediente = yield ingredientesService.updateIngredientes(ingredienteId, req.body);
+                res.status(200).json(updatedIngrediente);
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(400).json({ error: err.message });
+                }
+                else {
+                    // Manejar otros tipos de errores aquí
+                    res.status(500).json({ error: "Internal server error" });
+                }
+            }
+        });
+    }
 }
 exports.IngredienteController = IngredienteController;

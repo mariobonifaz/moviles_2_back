@@ -44,5 +44,25 @@ class IngredientesService {
             }
         });
     }
+    updateIngredientes(ingredientesId, IngredientesData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // Primero, obtenemos el producto que queremos actualizar
+                const existingIngrediente = yield this.ingredientesRepository.findById(ingredientesId);
+                // Si el producto no existe, lanzamos un error
+                if (!existingIngrediente) {
+                    throw new Error('Product not found');
+                }
+                // Actualizamos los campos proporcionados en updatedProductData
+                Object.assign(existingIngrediente, IngredientesData);
+                // Actualizamos el producto en la base de datos
+                const updatedIngrediente = yield this.ingredientesRepository.updateIngrediente(existingIngrediente);
+                return updatedIngrediente;
+            }
+            catch (error) {
+                throw new Error(`Error updating product: ${error.message}`);
+            }
+        });
+    }
 }
 exports.IngredientesService = IngredientesService;

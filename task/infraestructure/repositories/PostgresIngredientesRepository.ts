@@ -36,4 +36,30 @@ export class PostgresIngredientesRepository implements IngredientesRepository {
             throw new Error(`Error deleting Ingrediente: ${(error as Error).message}`);
         }
     }
+
+    async updateIngrediente(ingredientes: Ingredientes): Promise<Ingredientes> {
+        try {
+            await IngredientesModel.update(
+                {
+                    nombre: ingredientes.nombre,
+                    cantidad: ingredientes.cantidad
+                },
+                {
+                    where: { id: ingredientes.id }
+                }
+            );
+            return ingredientes;
+        } catch (error) {
+            throw new Error(`Error updating product: ${(error as Error).message}`);
+        }
+    }
+
+    async findById(ingredientesId: string): Promise<Ingredientes | null> {
+        try {
+            const ingrediente = await IngredientesModel.findByPk(ingredientesId);
+            return ingrediente ? ingrediente.toJSON() as Ingredientes : null;
+        } catch (error) {
+            throw new Error(`Error finding ingredientes: ${(error as Error).message}`);
+        }
+    }
 }

@@ -55,5 +55,32 @@ class PostgresIngredientesRepository {
             }
         });
     }
+    updateIngrediente(ingredientes) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield IngredientesModel_1.default.update({
+                    nombre: ingredientes.nombre,
+                    cantidad: ingredientes.cantidad
+                }, {
+                    where: { id: ingredientes.id }
+                });
+                return ingredientes;
+            }
+            catch (error) {
+                throw new Error(`Error updating product: ${error.message}`);
+            }
+        });
+    }
+    findById(ingredientesId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const ingrediente = yield IngredientesModel_1.default.findByPk(ingredientesId);
+                return ingrediente ? ingrediente.toJSON() : null;
+            }
+            catch (error) {
+                throw new Error(`Error finding ingredientes: ${error.message}`);
+            }
+        });
+    }
 }
 exports.PostgresIngredientesRepository = PostgresIngredientesRepository;

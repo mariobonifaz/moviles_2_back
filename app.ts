@@ -18,6 +18,7 @@ const ingredienteController = new IngredienteController(ingredienteService);
 app.post('/api/v1/ingredientes', (req, res) => ingredienteController.createIngrediente(req, res));
 app.get('/api/v1/ingredientes', (req, res) => ingredienteController.getAllIngrediente(req, res));
 app.delete('/api/v1/:id/ingredientes', (req, res) => ingredienteController.deleteIngredienteById(req, res));
+app.put('/api/v2/:id/ingredientes',  (req,res) => ingredienteController.updateIngrediente(req, res, ingredienteService));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
